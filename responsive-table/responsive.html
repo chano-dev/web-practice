@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project for learning web Programming">
+
+    <title>Responsive</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            height: 100vh;
+            background-color: whitesmoke;
+        }
+        table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid black;
+           
+        }
+        tr {
+            width: 100%;
+        }
+        tr td:first-child {
+            background-color: royalblue;
+        }
+        tr td:first-child:hover {
+            background-color: lightskyblue;
+            color: white;
+            transition: all 0.1s ease-in-out;
+        }
+        tr td:last-child {
+            background-color: chocolate;
+        }
+        tr td:last-child:hover {
+            background-color: burlywood;
+            color: white;
+            transition: all 0.1s ease-in-out;
+        }
+        td {
+            border: 3px solid black;
+            padding: 25px;
+            width: 50%;
+            font-size: 25px;
+            font-weight: 500;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>A</td>
+            <td>B</td>
+        </tr>
+    </table>    
+</body>
+</html>
