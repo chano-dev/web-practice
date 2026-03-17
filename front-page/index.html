@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monte Olimpo da Programação</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8c96e;
+            --gold-dim: #7a621f;
+            --white: #f5f0e8;
+            --dark: #0d0c0a;
+            --overlay: rgba(10, 8, 5, 0.72);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--dark);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        /* ── BACKGROUND ── */
+        .bg {
+            position: fixed;
+            inset: 0;
+            background-image: url("https://images.pexels.com/photos/4388164/pexels-photo-4388164.jpeg");
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--overlay);
+        }
+
+        /* subtle gold vignette */
+        .bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+
+        /* ── LAYOUT ── */
+        .stage {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 20px 24px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            text-align: center;
+            animation: fadeDown 0.9s ease both;
+        }
+
+        .header__eyebrow {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(9px, 2vw, 12px);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .header__title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(22px, 5vw, 42px);
+            font-weight: 900;
+            line-height: 1.15;
+            color: var(--white);
+            text-shadow: 0 2px 30px rgba(201,168,76,0.3);
+        }
+
+        .header__title span {
+            color: var(--gold);
+        }
+
+        .header__subtitle {
+            margin-top: 12px;
+            font-size: clamp(11px, 2vw, 13px);
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(245,240,232,0.65);
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            animation: fadeDown 1s 0.2s ease both;
+        }
+
+        .divider__line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-dim));
+        }
+
+        .divider__line:last-child {
+            background: linear-gradient(to left, transparent, var(--gold-dim));
+        }
+
+        .divider__symbol {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 4px;
+        }
+
+        /* ── CARDS ── */
+        .cards {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(24px, 5vw, 60px);
+            flex-wrap: wrap;
+            animation: fadeUp 1s 0.4s ease both;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        /* photo ring */
+        .card__ring {
+            position: relative;
+            width: clamp(160px, 25vw, 220px);
+            height: clamp(160px, 25vw, 220px);
+        }
+
+        /* spinning gold border */
+        .card__ring::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: conic-gradient(var(--gold) 0deg, transparent 120deg, var(--gold-dim) 240deg, transparent 300deg, var(--gold) 360deg);
+            animation: spin 8s linear infinite;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover .card__ring::before {
+            opacity: 1;
+            animation-duration: 3s;
+        }
+
+        .card__img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .card__img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.4s ease;
+            filter: brightness(0.85) sepia(0.15);
+        }
+
+        .card:hover .card__img img {
+            transform: scale(1.08);
+            filter: brightness(1) sepia(0);
+        }
+
+        /* overlay caption on photo */
+        .card__img::after {
+            content: attr(data-label);
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cinzel', serif;
+            font-size: clamp(13px, 2.5vw, 17px);
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--white);
+            background: rgba(0,0,0,0.38);
+            opacity: 1;
+            transition: background 0.4s ease;
+        }
+
+        .card:hover .card__img::after {
+            background: rgba(0,0,0,0.15);
+        }
+
+        /* name + role */
+        .card__info {
+            text-align: center;
+        }
+
+        .card__name {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(14px, 2.5vw, 18px);
+            font-weight: 700;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+        }
+
+        .card__role {
+            margin-top: 4px;
+            font-size: clamp(10px, 1.8vw, 12px);
+            font-weight: 300;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: rgba(245,240,232,0.5);
+        }
+
+        .card__cta {
+            margin-top: 4px;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .card:hover .card__cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            animation: fadeUp 1s 0.6s ease both;
+        }
+
+        .footer__divider {
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold-dim), transparent);
+            margin: 0 auto 12px;
+        }
+
+        .footer__text {
+            font-size: clamp(9px, 1.8vw, 11px);
+            font-style: italic;
+            letter-spacing: 1.5px;
+            color: rgba(245,240,232,0.38);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 520px) {
+            body { overflow-y: auto; }
+
+            .stage {
+                min-height: 100svh;
+                padding: 32px 16px 20px;
+                justify-content: center;
+                gap: 28px;
+            }
+
+            .cards {
+                flex-direction: column;
+                gap: 28px;
+            }
+
+            .card__ring {
+                width: 150px;
+                height: 150px;
+            }
+
+            .divider__line { width: 40px; }
+        }
+
+        @media (min-width: 521px) and (max-width: 900px) {
+            .stage { padding: 36px 24px 20px; gap: 24px; }
+
+            .card__ring {
+                width: 180px;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg"></div>
+
+    <div class="stage">
+
+        <header class="header">
+            <p class="header__eyebrow">42 Luanda · Discovery Piscine</p>
+            <h1 class="header__title">Monte <span>Olimpo</span><br>da Programação</h1>
+            <p class="header__subtitle">Escolhe o teu herói para ver o currículo</p>
+            <div class="divider">
+                <span class="divider__line"></span>
+                <span class="divider__symbol">⚡ ✦ ⚡</span>
+                <span class="divider__line"></span>
+            </div>
+        </header>
+
+        <main class="cards">
+
+            <a class="card" href="apollo.html">
+                <div class="card__ring">
+                    <div class="card__img" data-label="Apollo">
+                        <img
+                            src="https://th.bing.com/th/id/R.66b1f9a349dc11558f27768c274c536a?rik=troQVMsp%2fNbJUQ&pid=ImgRaw&r=0"
+                            alt="Apollo — Chano Dev"
+                        >
+                    </div>
+                </div>
+                <div class="card__info">
+                    <p class="card__name">Apollo</p>
+                    <p class="card__role">Chano Dev</p>
+                    <p class="card__cta">Ver currículo →</p>
+                </div>
+            </a>
+
+            <a class="card" href="hercules.html">
+                <div class="card__ring">
+                    <div class="card__img" data-label="Hércules">
+                        <img
+                            src="https://tse1.mm.bing.net/th/id/OIP.eFTYfZdrSONN4WEl_z7cgAHaLH?rs=1&pid=ImgDetMain&o=7&rm=3"
+                            alt="Hércules"
+                        >
+                    </div>
+                </div>
+                <div class="card__info">
+                    <p class="card__name">Hércules</p>
+                    <p class="card__role">Colega Dev</p>
+                    <p class="card__cta">Ver currículo →</p>
+                </div>
+            </a>
+
+        </main>
+
+        <footer class="footer">
+            <div class="footer__divider"></div>
+            <p class="footer__text">
+                Desenvolvido por participantes da Discovery da 42 Luanda &nbsp;·&nbsp; &copy; Todos os direitos reservados
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

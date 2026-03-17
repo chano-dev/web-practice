@@ -8,12 +8,18 @@
 </head>
 <body>
     <button type="button" id="btn">Change Color</button>
-    
+
 <script type="text/javascript">
 const btn = document.getElementById("btn");
 const area = document.body;
 btn.addEventListener("click", function () {
-    area.classList.toggle("dark");
+    area.classList.add("dark");
+    btn.style.fontSize = "32px";
+});
+btn.addEventListener("dblclick", function () {
+    //area.classList.remove("dark");
+    area.classList.add("lighter");
+    btn.style.fontSize = "48px";
 });
 </script>
 </body>
